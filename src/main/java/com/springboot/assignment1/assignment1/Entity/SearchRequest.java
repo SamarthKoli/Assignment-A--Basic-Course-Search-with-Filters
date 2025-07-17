@@ -17,5 +17,8 @@ public class SearchRequest {
     private int page = 0;
     private int size = 10;
     private String sortDirection = "asc";
+    private boolean autocomplete;
+    private boolean fuzzy;
+
 }
 

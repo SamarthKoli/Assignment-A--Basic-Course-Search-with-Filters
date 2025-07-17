@@ -6,8 +6,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
-
-
+import org.springframework.data.elasticsearch.core.suggest.Completion;
+import org.springframework.data.elasticsearch.annotations.CompletionField;
 import org.springframework.data.elasticsearch.annotations.DateFormat;
 
 
@@ -52,6 +52,10 @@ public class CourseDocument {
 
 @Field(type = FieldType.Date, format = DateFormat.date_hour_minute_second)
 private LocalDateTime nextSessionDate;
+
+  @CompletionField
+    private Completion suggest;
+
 
 
 }

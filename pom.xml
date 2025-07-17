@@ -59,6 +59,21 @@
 			<optional>true</optional>
 		</dependency>
 
+		<dependency>
+  <groupId>org.springframework.boot</groupId>
+  <artifactId>spring-boot-starter-test</artifactId>
+  <scope>test</scope>
+</dependency>
+
+<!-- For Elasticsearch Testcontainers -->
+<dependency>
+  <groupId>org.testcontainers</groupId>
+  <artifactId>elasticsearch</artifactId>
+  <version>1.19.1</version>
+  <scope>test</scope>
+</dependency>
+
+
 			<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>

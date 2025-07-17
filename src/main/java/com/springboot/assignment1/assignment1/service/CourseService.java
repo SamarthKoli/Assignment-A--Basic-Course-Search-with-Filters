@@ -22,13 +22,23 @@ public class CourseService {
 
         Criteria criteria = new Criteria();
 
-        // Full-text search
+  
         if (request.getQ() != null && !request.getQ().isEmpty()) {
-            criteria = criteria.or(Criteria.where("title").matches(request.getQ()))
-                               .or(Criteria.where("description").matches(request.getQ()));
+            Criteria title;
+
+            if (request.isAutocomplete()) {
+                title = Criteria.where("title").startsWith(request.getQ());
+            } else if (request.isFuzzy()) {
+                title = Criteria.where("title").fuzzy(request.getQ());
+            } else {
+                title = Criteria.where("title").matches(request.getQ());
+            }
+
+            Criteria description = Criteria.where("description").matches(request.getQ());
+            criteria = criteria.or(title).or(description);
         }
 
-        // Filters
+    
         if (request.getCategory() != null) {
             criteria = criteria.and(Criteria.where("category").is(request.getCategory()));
         }
@@ -57,7 +67,6 @@ public class CourseService {
             criteria = criteria.and(Criteria.where("nextSessionDate").greaterThanEqual(request.getStartDate()));
         }
 
-        // ✅ Handle price sorting
         Sort sort;
         if ("desc".equalsIgnoreCase(request.getSortDirection())) {
             sort = Sort.by(Sort.Direction.DESC, "price");
@@ -68,23 +77,23 @@ public class CourseService {
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);
         CriteriaQuery query = new CriteriaQuery(criteria, pageable);
 
+      
         SearchHits<CourseDocument> searchHits = elasticsearchOperations.search(query, CourseDocument.class);
 
-       List<CourseResponseDTO> courses = searchHits.getSearchHits()
-    .stream()
-    .map(hit -> {
-        CourseDocument doc = hit.getContent();
-        return new CourseResponseDTO(
-            doc.getId(),
-            doc.getTitle(),
-            doc.getCategory(),
-            doc.getPrice(),
-            doc.getNextSessionDate()
-        );
-    })
-    .toList();
+        List<CourseResponseDTO> courses = searchHits.getSearchHits()
+                .stream()
+                .map(hit -> {
+                    CourseDocument doc = hit.getContent();
+                    return new CourseResponseDTO(
+                            doc.getId(),
+                            doc.getTitle(),
+                            doc.getCategory(),
+                            doc.getPrice(),
+                            doc.getNextSessionDate()
+                    );
+                })
+                .toList();
 
-return new PageImpl<>(courses, pageable, searchHits.getTotalHits());
-
+        return new PageImpl<>(courses, pageable, searchHits.getTotalHits());
     }
 }
