@@ -13,7 +13,7 @@ public class SearchRequest {
     private String category, type;
     private Double minPrice, maxPrice;
     private String startDate;
-    private String sort; // priceAsc, priceDesc, upcoming
+    private String sort;
     private int page = 0;
     private int size = 10;
     private String sortDirection = "asc";

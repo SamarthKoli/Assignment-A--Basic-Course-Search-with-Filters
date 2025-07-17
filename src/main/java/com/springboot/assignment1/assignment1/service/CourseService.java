@@ -71,7 +71,7 @@ public class CourseService {
         if ("desc".equalsIgnoreCase(request.getSortDirection())) {
             sort = Sort.by(Sort.Direction.DESC, "price");
         } else {
-            sort = Sort.by(Sort.Direction.ASC, "price"); // default
+            sort = Sort.by(Sort.Direction.ASC, "price"); 
         }
 
         Pageable pageable = PageRequest.of(request.getPage(), request.getSize(), sort);

@@ -9,7 +9,7 @@ public class CourseResponseDTO {
     private Double price;
     private LocalDateTime nextSessionDate;
 
-    // Constructor
+
     public CourseResponseDTO(String id, String title, String category, Double price, LocalDateTime nextSessionDate) {
         this.id = id;
         this.title = title;
@@ -18,7 +18,7 @@ public class CourseResponseDTO {
         this.nextSessionDate = nextSessionDate;
     }
 
-    // Getters (no setters needed unless you want mutability)
+
     public String getId() {
         return id;
     }
