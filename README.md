@@ -1,192 +1,220 @@
-# 🧠 Course Search API with Spring Boot & Elasticsearch
+# Course Search Application with Elasticsearch
 
-This is a **Spring Boot application** that demonstrates **full-text search**, **filtering**, **sorting**, and **autocomplete suggestions** using **Elasticsearch 8+** and **Spring Data Elasticsearch 5+**.
-
-## 🚀 Features
-
-- Full-text search on course titles and descriptions.
-- Filter courses by:
-  - Category
-  - Type (online/offline)
-  - Age range
-  - Price range
-  - Start date
-- Sort results by price (`asc` or `desc`).
-- Autocomplete (bonus): Get course suggestions as you type.
-- Clean JSON response with only needed fields.
+This project is a Spring Boot application that integrates with Elasticsearch (8.x) to provide powerful full-text search capabilities, filtering, sorting, and autocomplete support for course data.
 
 ---
 
-## 🛠️ Tech Stack
+## ✨ Features
+
+- Full-text search by title and description.
+- Filtering by category, type, price range, age range, and start date.
+- Sorting by price (low to high or high to low).
+- Autocomplete suggestions using prefix matching.
+- Elasticsearch integration using `ElasticsearchOperations` (Spring Data Elasticsearch 5+).
+
+---
+
+## ⚡ Technologies Used
 
 - Java 17+
-- Spring Boot 3+
-- Spring Data Elasticsearch 5+
-- Elasticsearch 8.12+
-- Maven
-- Docker (for Elasticsearch)
+- Spring Boot 3.5+
+- Spring Data Elasticsearch 5.5+
+- Docker + Docker Compose (for Elasticsearch)
 
 ---
 
-## ⚙️ Prerequisites
+## 📁 Project Structure
 
-- Java 17 or higher
-- Maven
-- Docker (for running Elasticsearch locally)
-
----
-
-## 🐳 Setup Elasticsearch via Docker
-
-```bash
-docker run -d --name elasticsearch \
-  -p 9200:9200 \
-  -e "discovery.type=single-node" \
-  -e "xpack.security.enabled=false" \
-  docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+```
+src/
+├── main/
+    ├── java/com/springboot/assignment1/
+    │   ├── controller/         # REST Controller
+    │   ├── service/            # Business Logic
+    │   ├── Entity/             # CourseDocument & SearchRequest
+    │   ├── dto/                # CourseResponseDTO
+    │   └── Repository/         # Elasticsearch Repository (optional)
+    └── resources/
+        ├── application.yml
+        └── course-data.json (sample)
 ```
 
-Verify it’s up:
-
-```bash
-curl http://localhost:9200
-```
-
-You should see basic info like cluster name and version.
-
 ---
 
-## 🔧 Spring Boot Setup
+## 🚀 Getting Started
 
-1. Clone the project:
-   ```bash
-   git clone https://github.com/your-repo/course-search-api.git
-   cd course-search-api
-   ```
+### 1. Clone the Repository
 
+```bash
+git clone https://github.com/yourname/elasticsearch-course-search.git
+cd elasticsearch-course-search
+```
 
-3. Run the application:
+### 2. Start Elasticsearch via Docker
+
+```bash
+docker-compose up -d
+```
+
+### 3. Run the Spring Boot Application
 
 ```bash
 ./mvnw spring-boot:run
 ```
 
+> The app will start at: `http://localhost:8080`
+
 ---
 
-## 🧪 Testing API Endpoints
+## 🧰 API Documentation
 
-### 🔎 1. Search Courses
+### 🔍 `/api/v1/search`
 
-**Endpoint:**
+#### Query Parameters:
 
-```
-GET /api/v1/search
-```
+| Parameter       | Type         | Description                             |
+| --------------- | ------------ | --------------------------------------- |
+| `q`             | `string`     | Full-text search string                 |
+| `category`      | `string`     | Filter by category                      |
+| `type`          | `string`     | Filter by course type                   |
+| `minAge`        | `int`        | Minimum age filter                      |
+| `maxAge`        | `int`        | Maximum age filter                      |
+| `minPrice`      | `float`      | Minimum price filter                    |
+| `maxPrice`      | `float`      | Maximum price filter                    |
+| `startDate`     | `string`     | Filter for courses after date           |
+| `sortDirection` | `asc/desc`   | Sort by price (low to high/high to low) |
+| `autocomplete`  | `true/false` | Enable autocomplete (prefix match)      |
+| `page`          | `int`        | Page number                             |
+| `size`          | `int`        | Page size                               |
 
-**Sample Request:**
+---
+
+## 🔍 Example API Requests
+
+### 1. Full-text search:
 
 ```bash
-curl "http://localhost:8080/api/v1/search?q=physics&category=science&minAge=10&maxPrice=1000&sortDirection=desc&page=0&size=5"
+curl "http://localhost:8080/api/v1/search?q=math"
 ```
 
-**Expected Response:**
+### 2. Filtered by category and price:
+
+```bash
+curl "http://localhost:8080/api/v1/search?category=Science&minPrice=100&maxPrice=300"
+```
+
+### 3. Sorted by price (high to low):
+
+```bash
+curl "http://localhost:8080/api/v1/search?q=science&sortDirection=desc"
+```
+
+### 4. Autocomplete search:
+
+```bash
+curl "http://localhost:8080/api/v1/search?q=hi&autocomplete=true"
+```
+
+#### Response:
 
 ```json
 {
-  "total": 2,
   "courses": [
     {
-      "id": "1",
-      "title": "Advanced Physics",
-      "category": "science",
-      "price": 950.0,
-      "nextSessionDate": "2025-08-10T00:00:00"
+      "id": "9",
+      "title": "Basic Hindi",
+      "category": "Language",
+      "price": 70.0,
+      "nextSessionDate": "2025-08-12T10:30:00"
     }
-  ]
+  ],
+  "total": 1
 }
-```
 
-✅ Response includes:
-- Correct total hit count
-- Filtered and sorted results
-- Only required fields returned
 
----
-
-### 💡 2. Autocomplete Suggest (Bonus)
-
-**Endpoint:**
-
-```
-GET /api/v1/suggest?q=phy
-```
-
-**Sample Request:**
-
-```bash
-curl "http://localhost:8080/api/v1/suggest?q=phy"
-```
-
-**Expected Response:**
-
-```json
 {
-  "suggestions": ["Physics 101", "Physical Chemistry", "Physiology for Beginners"]
+    "courses": [
+        {
+            "id": "5",
+            "title": "Fun with Fractions",
+            "category": "Math",
+            "price": 60.0,
+            "nextSessionDate": "2025-07-25T09:00:00"
+        },
+        {
+            "id": "9",
+            "title": "Basic Hindi",
+            "category": "Language",
+            "price": 70.0,
+            "nextSessionDate": "2025-08-12T10:30:00"
+        },
+        {
+            "id": "3",
+            "title": "Creative Drawing",
+            "category": "Art",
+            "price": 80.0,
+            "nextSessionDate": "2025-09-01T11:00:00"
+        },
+        {
+            "id": "10",
+            "title": "Mindful Yoga",
+            "category": "Wellness",
+            "price": 90.0,
+            "nextSessionDate": "2025-07-28T08:00:00"
+        },
+        {
+            "id": "1",
+            "title": "Math Magic 101",
+            "category": "Math",
+            "price": 99.99,
+            "nextSessionDate": "2025-08-10T10:00:00"
+        },
+        {
+            "id": "6",
+            "title": "Story Writing Club",
+            "category": "Language",
+            "price": 100.0,
+            "nextSessionDate": "2025-08-18T13:00:00"
+        },
+        {
+            "id": "2",
+            "title": "Science Explorers",
+            "category": "Science",
+            "price": 120.0,
+            "nextSessionDate": "2025-08-15T14:30:00"
+        },
+        {
+            "id": "8",
+            "title": "Astronomy 101",
+            "category": "Science",
+            "price": 130.0,
+            "nextSessionDate": "2025-09-05T18:00:00"
+        },
+        {
+            "id": "4",
+            "title": "Little Coders",
+            "category": "Technology",
+            "price": 150.0,
+            "nextSessionDate": "2025-08-20T12:00:00"
+        },
+        {
+            "id": "7",
+            "title": "Junior Robotics",
+            "category": "Technology",
+            "price": 200.0,
+            "nextSessionDate": "2025-08-22T15:00:00"
+        }
+    ],
+    "total": 10
 }
 ```
 
-✅ Matches based on partial input using `prefix` query.
-
 ---
 
-## 📦 Sample SearchRequest Object (mapped from query params)
-
-| Field           | Type    | Description                          |
-|----------------|---------|--------------------------------------|
-| q              | String  | Full-text search keyword             |
-| category       | String  | Filter by course category            |
-| type           | String  | Filter by course type (online/offline) |
-| minAge         | Integer | Minimum age                          |
-| maxAge         | Integer | Maximum age                          |
-| minPrice       | Double  | Minimum price                        |
-| maxPrice       | Double  | Maximum price                        |
-| startDate      | LocalDateTime | Filter courses starting after this |
-| sortDirection  | String  | `asc` or `desc` (price sorting)      |
-| page           | Integer | Page number (default 0)              |
-| size           | Integer | Page size (default 10)               |
-
----
-
-## 🗃️ Index Mapping Note
-
-Ensure that your Elasticsearch index has correct mappings, especially for:
-
-```json
-"nextSessionDate": {
-  "type": "date",
-  "format": "strict_date_time||yyyy-MM-dd'T'HH:mm:ss||yyyy-MM-dd"
-}
-```
-
-This ensures correct parsing for `LocalDateTime`.
+## 🔍 Sample Autocomplete Response Image
+ Added in Screenshots directory
 
 
 
-## 🏁 Final Notes
 
-- ✅ Project follows best practices using `ElasticsearchOperations` and Criteria API.
-- ✅ Clean controller-service separation.
-- ✅ Extensible for future features like multi-index search or role-based filtering.
-
----
-
-
-
-```markdown
-![Sample Response](screenshots/response1.png)
-
-![Sample Response](screenshots/response2.png)
-```
-
----
 
