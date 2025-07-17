@@ -1,0 +1,122 @@
+[
+  {
+    "id": "1",
+    "title": "Math Magic 101",
+    "description": "A fun intro to basic math skills.",
+    "category": "Math",
+    "type": "COURSE",
+    "gradeRange": "1st–3rd",
+    "minAge": 6,
+    "maxAge": 9,
+    "price": 99.99,
+    "nextSessionDate": "2025-08-10T10:00:00"
+  },
+  {
+    "id": "2",
+    "title": "Science Explorers",
+    "description": "Hands-on experiments for young scientists.",
+    "category": "Science",
+    "type": "CLUB",
+    "gradeRange": "4th–6th",
+    "minAge": 9,
+    "maxAge": 12,
+    "price": 120.00,
+    "nextSessionDate": "2025-08-15T14:30:00"
+  },
+  {
+    "id": "3",
+    "title": "Creative Drawing",
+    "description": "Learn sketching, coloring, and shading.",
+    "category": "Art",
+    "type": "ONE_TIME",
+    "gradeRange": "2nd–4th",
+    "minAge": 7,
+    "maxAge": 10,
+    "price": 80.00,
+    "nextSessionDate": "2025-09-01T11:00:00"
+  },
+  {
+    "id": "4",
+    "title": "Little Coders",
+    "description": "Intro to logic through Scratch programming.",
+    "category": "Technology",
+    "type": "COURSE",
+    "gradeRange": "3rd–5th",
+    "minAge": 8,
+    "maxAge": 11,
+    "price": 150.00,
+    "nextSessionDate": "2025-08-20T12:00:00"
+  },
+  {
+    "id": "5",
+    "title": "Fun with Fractions",
+    "description": "Understand fractions with games.",
+    "category": "Math",
+    "type": "ONE_TIME",
+    "gradeRange": "2nd–3rd",
+    "minAge": 7,
+    "maxAge": 9,
+    "price": 60.00,
+    "nextSessionDate": "2025-07-25T09:00:00"
+  },
+  {
+    "id": "6",
+    "title": "Story Writing Club",
+    "description": "Spark creativity and write stories.",
+    "category": "Language",
+    "type": "CLUB",
+    "gradeRange": "3rd–6th",
+    "minAge": 8,
+    "maxAge": 12,
+    "price": 100.00,
+    "nextSessionDate": "2025-08-18T13:00:00"
+  },
+  {
+    "id": "7",
+    "title": "Junior Robotics",
+    "description": "Build simple robots with kits.",
+    "category": "Technology",
+    "type": "COURSE",
+    "gradeRange": "4th–6th",
+    "minAge": 9,
+    "maxAge": 12,
+    "price": 200.00,
+    "nextSessionDate": "2025-08-22T15:00:00"
+  },
+  {
+    "id": "8",
+    "title": "Astronomy 101",
+    "description": "Explore stars, planets, and galaxies.",
+    "category": "Science",
+    "type": "COURSE",
+    "gradeRange": "5th–7th",
+    "minAge": 10,
+    "maxAge": 13,
+    "price": 130.00,
+    "nextSessionDate": "2025-09-05T18:00:00"
+  },
+  {
+    "id": "9",
+    "title": "Basic Hindi",
+    "description": "Learn the basics of Hindi language.",
+    "category": "Language",
+    "type": "COURSE",
+    "gradeRange": "1st–3rd",
+    "minAge": 6,
+    "maxAge": 9,
+    "price": 70.00,
+    "nextSessionDate": "2025-08-12T10:30:00"
+  },
+  {
+    "id": "10",
+    "title": "Mindful Yoga",
+    "description": "Simple yoga for kids with breathing exercises.",
+    "category": "Wellness",
+    "type": "ONE_TIME",
+    "gradeRange": "1st–4th",
+    "minAge": 6,
+    "maxAge": 10,
+    "price": 90.00,
+    "nextSessionDate": "2025-07-28T08:00:00"
+  }
+]
