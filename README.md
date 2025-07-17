@@ -183,9 +183,9 @@ This ensures correct parsing for `LocalDateTime`.
 
 
 ```markdown
-![Sample Response](./screenshots/response1.png)
+![Sample Response](screenshots/response1.png)
 
-![Sample Response](./screenshots/response2.png)
+![Sample Response](screenshots/response2.png)
 ```
 
 ---
